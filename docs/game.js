@@ -38,7 +38,7 @@ function getIngredient(name) {
   animatedSprite = new PIXI.AnimatedSprite(ingredientTextures[name]);
   animatedSprite.animationSpeed = 0.2;
   animatedSprite.play();
-  animatedSprite.scale = new PIXI.Point(2, 2);
+  animatedSprite.scale = new PIXI.Point(4, 4);
   animatedSprite.name = name;
   return animatedSprite;
 }
