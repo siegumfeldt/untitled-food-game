@@ -27,7 +27,7 @@ function addLane(number) {
 }
 
 function loadIngredientTextures(name, row){
-  const sheet = resources["assets/ingredients.png"].texture;
+  const sheet = resources["ingredients.png"].texture;
   ingredientTextures[name] = new Array();
   for (let col = 0; col < 16; col++) {
     ingredientTextures[name].push(new Texture(sheet, new Rectangle(col*16, row*16, 16, 16)));   
