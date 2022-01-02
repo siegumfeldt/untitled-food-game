@@ -67,5 +67,5 @@ function setup() {
 }
 
 
-loader.add("assets/ingredients.png")
+loader.add("ingredients.png")
       .load(setup);
