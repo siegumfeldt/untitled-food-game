@@ -10,7 +10,7 @@ PIXI.settings.SCALE_MODE = PIXI.SCALE_MODES.NEAREST;
 
 const app = new PIXI.Application({
     width: 400,
-    height: 400,
+    height: 600,
     antialias: false
 });
 
@@ -38,16 +38,35 @@ function getIngredient(name) {
   animatedSprite = new PIXI.AnimatedSprite(ingredientTextures[name]);
   animatedSprite.animationSpeed = 0.2;
   animatedSprite.play();
+  animatedSprite.anchor = new PIXI.Point(0.5, 0.5);
   animatedSprite.scale = new PIXI.Point(4, 4);
   animatedSprite.name = name;
   return animatedSprite;
 }
 
+const level = [
+  {"frame": 60, "lane": 0, "ingredient": "top-bun"},
+  {"frame": 120, "lane": 0, "ingredient": "meat"},
+  {"frame": 180, "lane": 0, "ingredient": "top-bun"}
+]
+
+let nextLevelItemIndex = 0;
+let totalDelta = 0;
+
+let plate = null;
+
 
 function gameLoop(delta) {
+  totalDelta += delta;
+  if(nextLevelItemIndex < level.length && totalDelta > level[nextLevelItemIndex].frame) {
+    const nextLaneNumber = level[nextLevelItemIndex].lane;
+    const nextIngredient = level[nextLevelItemIndex].ingredient;
+    lanes[nextLaneNumber].addChild(getIngredient(nextIngredient));
+    nextLevelItemIndex += 1;
+  }
   lanes.forEach(lane => {
     lane.children.forEach(food => {
-      if(food.y > 300) {
+      if(food.y > 650) {
         food.destroy();
       } else {
         food.y += delta;
@@ -61,11 +80,17 @@ function setup() {
   loadIngredientTextures("top-bun", 1);
   addLane(0);
 
-  lanes[0].addChild(getIngredient("meat"));
+  let plate = new PIXI.Sprite(resources["assets/plate.png"].texture);
+  plate.scale = new PIXI.Point(4, 4);
+  plate.x = 100;
+  plate.y = 550;
+  plate.anchor = new PIXI.Point(0.5, 0.5);
+  app.stage.addChild(plate);
 
-  app.ticker.add((delta) => gameLoop(delta));
+  app.ticker.add(gameLoop);
 }
 
 
 loader.add("assets/ingredients.png")
+      .add("assets/plate.png")
       .load(setup);
