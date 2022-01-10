@@ -59,7 +59,7 @@ function getIngredient(name) {
 }
 
 const level = [
-  {"frame": 60, "lane": 0, "ingredient": "top-bun"},
+  {"frame": 60, "lane": 0, "ingredient": "under-bun"},
   {"frame": 120, "lane": 0, "ingredient": "meat"},
   {"frame": 180, "lane": 0, "ingredient": "top-bun"}
 ]
@@ -97,6 +97,7 @@ function gameLoop(delta) {
 function setup() {
   loadIngredientTextures("meat", 0);
   loadIngredientTextures("top-bun", 1);
+  loadIngredientTextures("under-bun", 2);
   addLane(0);
 
   plate = new PIXI.Sprite(resources["assets/plate.png"].texture);
